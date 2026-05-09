@@ -1,12 +1,18 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
 
 const app = express();
-const PORT = 3000;
+
+// 🔥 IMPORTANTE PARA RENDER
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.static("public"));
 
+// 📁 Archivos estáticos
+app.use(express.static(path.join(__dirname, "public")));
+
+// 🧠 BASE DE DATOS
 const db = new sqlite3.Database("database.db");
 
 db.run(`
@@ -21,14 +27,19 @@ CREATE TABLE IF NOT EXISTS horas (
 )
 `);
 
-// GET TODOS
+// 🔥 RUTA PRINCIPAL (SOLUCIÓN DEL "NOT FOUND")
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// 📥 OBTENER DATOS
 app.get("/api/horas", (req, res) => {
   db.all("SELECT * FROM horas ORDER BY id DESC", [], (err, rows) => {
     res.json(rows);
   });
 });
 
-// INSERT
+// ➕ AÑADIR REGISTRO
 app.post("/api/horas", (req, res) => {
   const { fecha, entrada, salida, horas, precio, total } = req.body;
 
@@ -42,13 +53,13 @@ app.post("/api/horas", (req, res) => {
   );
 });
 
-// DELETE
+// ❌ ELIMINAR
 app.delete("/api/horas/:id", (req, res) => {
   db.run("DELETE FROM horas WHERE id = ?", req.params.id);
   res.json({ ok: true });
 });
 
-// RESUMEN MENSUAL
+// 💰 RESUMEN MENSUAL
 app.get("/api/resumen/:mes", (req, res) => {
   const mes = req.params.mes;
 
@@ -68,6 +79,7 @@ app.get("/api/resumen/:mes", (req, res) => {
   );
 });
 
+// 🚀 START SERVER (OBLIGATORIO RENDER)
 app.listen(PORT, () => {
-  console.log("Servidor en http://localhost:" + PORT);
+  console.log("Servidor corriendo en puerto " + PORT);
 });
