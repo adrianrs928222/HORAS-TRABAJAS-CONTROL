@@ -1,0 +1,9 @@
+{
+  "name": "Control Horas",
+  "short_name": "Horas",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#333333",
+  "icons": []
+}
