@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Horas App</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+  <style>
+    body { font-family: Arial; background:#f4f4f4; padding:20px; }
+    .container { max-width:600px; margin:auto; background:white; padding:20px; }
+    input, button { width:100%; padding:10px; margin-top:10px; }
+    table { width:100%; margin-top:20px; border-collapse:collapse; }
+    th, td { border:1px solid #ddd; padding:8px; text-align:center; }
+    th { background:#222; color:white; }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>Control de Horas</h2>
+
+  <input type="date" id="fecha">
+  <input type="time" id="entrada">
+  <input type="time" id="salida">
+  <input type="number" id="precio" placeholder="€/hora">
+
+  <button onclick="guardar()">Guardar</button>
+
+  <input type="month" id="mes">
+  <button onclick="verMes()">Ver mes</button>
+  <p id="resumen"></p>
+
+  <button onclick="exportar()">Exportar imagen</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Entrada</th>
+        <th>Salida</th>
+        <th>Horas</th>
+        <th>Total</th>
+        <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody id="tabla"></tbody>
+  </table>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
